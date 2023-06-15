@@ -1,0 +1,26 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+// Your variable overrides go here, e.g.:
+// $h1-font-size: 3rem;
+
+@import "node_modules/bootswatch/dist/flatly/variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootswatch/dist/flatly/bootswatch";
+
+// FontAwesome
+$fa-font-path:        "~font-awesome/fonts";
+@import "node_modules/font-awesome/scss/font-awesome";
+
+// Fine-Uploader
+@import "node_modules/fine-uploader/fine-uploader/fine-uploader";
+@import "node_modules/fine-uploader/fine-uploader/fine-uploader-new";
+@import "node_modules/fine-uploader/fine-uploader/fine-uploader-gallery";
+
+@import "node_modules/sweetalert2/src/sweetalert2";
+
+@import "main";
