@@ -1,5 +1,6 @@
 *
 !chunks/
+!images/
 !public/
 !videos/
 !.gitignore

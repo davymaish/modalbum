@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Album;
 use App\Models\LiveTv;
 use Illuminate\Http\Request;
+use Auth;
 
 class LiveTvController extends Controller
 {
@@ -29,8 +30,8 @@ class LiveTvController extends Controller
     {
         meta()->setMeta('My LiveTVs');
 
-        $tvs = LiveTv::all();
-        return view('user.livetvs', compact('tvs'));
+        $tvs = auth()->user()->livetvs;
+        return view('user.livetvs.index', compact('tvs'));
     }
 
     /**
@@ -40,8 +41,8 @@ class LiveTvController extends Controller
      */
     public function create()
     {
-        $categories = Album::all();
-        return view('user.livetv-add',compact('categories'));
+        $albums = auth()->user()->albums;
+        return view('user.livetvs.create',compact('albums'));
     }
 
     /**
@@ -61,7 +62,7 @@ class LiveTvController extends Controller
             $slider['featured_image'] = $photo_name;
         }
         $slider->save();
-        return redirect('admin/tv')->with('message','New Tv Added Successfully.');
+        return redirect('my/livetvs')->with('message','New Tv Added Successfully.');
     }
 
     /**
@@ -72,9 +73,9 @@ class LiveTvController extends Controller
      */
     public function edit($id)
     {
-        $categories = Album::all();
-        $tv = LiveTv::findOrFail($id);
-        return view('user.livetv-edit', compact('tv','categories'));
+        $albums = auth()->user()->albums;
+        $tv = LiveTv::where('created_by', Auth::id())->findOrFail($id);
+        return view('user.livetvs.edit', compact('tv','albums'));
     }
 
     /**
@@ -86,7 +87,7 @@ class LiveTvController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $slider = LiveTv::findOrFail($id);
+        $slider = LiveTv::where('created_by', Auth::id())->findOrFail($id);
         $data = $request->all();
 
         if ($file = $request->file('featured_image')){
@@ -102,7 +103,7 @@ class LiveTvController extends Controller
         }
 
         $slider->update($data);
-        return redirect('admin/tv')->with('message','Tv Updated Successfully.');
+        return redirect('my/livetvs')->with('message','Tv Updated Successfully.');
     }
 
     /**
@@ -113,9 +114,9 @@ class LiveTvController extends Controller
      */
     public function destroy($id)
     {
-        $tv = LiveTv::findOrFail($id);
+        $tv = LiveTv::where('created_by', Auth::id())->findOrFail($id);
         $tv->delete();
 
-        return redirect('admin/tv')->with('message','TV/Video Deleted Successfully.');
+        return redirect('my/livetvs')->with('message','TV/Video Deleted Successfully.');
     }
 }

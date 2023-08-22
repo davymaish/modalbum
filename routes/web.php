@@ -11,24 +11,36 @@ Route::group(['prefix' => 'my','middleware' => 'auth'], function () {
 
     /*My Uploads*/
     Route::get('/', 'User\DashboardController@index');
-    Route::get('albums', 'User\DashboardController@albums');
-    Route::get('images', 'User\DashboardController@images');
-    Route::get('videos', 'User\DashboardController@videos');
+
+    /*My Albums*/
+    Route::get('albums', 'User\AlbumController@index');
+    Route::get('album/create', 'User\AlbumController@create');
+    Route::post('album/store', 'User\AlbumController@store');
+    Route::get('album/edit/{id}', 'User\AlbumController@edit');
+    Route::post('album/update/{id}', 'User\AlbumController@update');
+    Route::delete('album/delete', 'User\AlbumController@ajaxDelete')->middleware(['ajax']);
 
     /*Live TV*/
-    Route::resource('livetvs', 'User\LiveTvController');
+    Route::get('livetvs', 'User\LiveTvController@index');
+    Route::get('livetvs/create', 'User\LiveTvController@create');
+    Route::post('livetvs/store', 'User\LiveTvController@store');
+    Route::get('livetvs/edit/{id}', 'User\LiveTvController@edit');
+    Route::post('livetvs/update/{id}', 'User\LiveTvController@update');
+    Route::delete('livetvs/destroy/{id}', 'User\LiveTvController@destroy');
 
     /*My Images*/
-    Route::get('image/upload', 'User\ImageController@index');
+    Route::get('images', 'User\ImageController@index');
+    Route::get('image/upload', 'User\ImageController@upload');
+    Route::post('image/create', 'User\ImageController@create');
     Route::post('image/upload', 'User\ImageController@ajaxUpload')->middleware(['ajax']);
     Route::delete('image/delete', 'User\ImageController@ajaxDelete')->middleware(['ajax']);
-    Route::post('image/create', 'User\ImageController@create');
 
     /*My Videos*/
-    Route::get('video/upload', 'User\VideoController@index');
-    Route::post('video/upload', 'User\VideoController@upload')->middleware(['ajax']);
-    Route::post('video/upload/done', 'User\VideoController@videoDone')->middleware(['ajax']);
-    Route::delete('video/delete/{id}', 'User\VideoController@videoDelete')->middleware(['ajax']);
+    Route::get('videos', 'User\VideoController@index');
+    Route::get('video/upload', 'User\VideoController@upload');
+    Route::post('video/upload', 'User\VideoController@ajaxUpload')->middleware(['ajax']);
+    Route::post('video/upload/done', 'User\VideoController@ajaxDone')->middleware(['ajax']);
+    Route::delete('video/delete/{id}', 'User\VideoController@ajaxDelete')->middleware(['ajax']);
     Route::post('video/create', 'User\VideoController@create');
 });
 

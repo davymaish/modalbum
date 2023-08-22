@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Album;
 use App\Models\Photo;
+use App\Models\Video;
+use App\Models\LiveTv;
 use App\Services\Filer;
 use App\Services\Imager;
 
@@ -26,15 +28,6 @@ class ImagesController extends Controller
         $this->imager = app(Imager::class);
     }
 
-    public function album($hash)
-    {
-        $album = Album::where('hash', $hash)->with(['images'])->firstOrFail();
-        $images = Photo::where('album_id', $album->id)->paginate(20);
-        meta()->setMeta(($album->album_title ? $album->album_title : 'Album ' . $album->hash));
-
-        return view('public.images.album', compact('album', 'images'));
-    }
-
     public function image($hash)
     {
         $extension = str_contains($hash, '.');
@@ -43,7 +36,7 @@ class ImagesController extends Controller
         }
 
         $image = Photo::where('hash', $hash)->firstOrFail();
-        meta()->setMeta(($image->image_title ? $image->image_title : 'Image ' . $image->hash));
+        meta()->setMeta(($image->title ? $image->title : 'Image ' . $image->hash));
 
         return view('public.images.image', compact('image'));
     }

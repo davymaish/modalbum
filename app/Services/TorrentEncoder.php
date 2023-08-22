@@ -4,7 +4,8 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
-use Rych\Bencode\Bencode;
+//use Rych\Bencode\Bencode;
+use Bhutanio\Bencode\Bencode;
 
 class TorrentEncoder
 {
@@ -50,7 +51,7 @@ class TorrentEncoder
     public function sanitize(array $torrent)
     {
         return [
-            'announce' => env('SITE_TRACKER_ANNOUNCE'),
+            'announce' => env('TRACKER_ANNOUNCE', 'wss://tracker.openwebtorrent.com'),
             'encoding' => !empty($torrent['encoding']) ? $torrent['encoding'] : 'UTF-8',
             'info'     => $torrent['info'],
         ];

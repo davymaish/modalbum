@@ -1,7 +1,30 @@
 ## Modalbum
-Modalbum includes everything you need to lunch a Live Streaming, Video Streaming and Image Sharing platform.  Its based on laravel 10 PHP framework.
+Modalbum includes everything you need to lunch a Video Streaming, Live Streaming and Image Sharing platform.  Its based on laravel 10 PHP framework.
 
-### Requirement
+![Home Page Screenshot](screenshots/homepage.png)
+_Application landing page._
+
+![Campaigns Screenshot](screenshots/videoplayer.png)
+_Video Streaming._
+
+## Features:
+Enjoy advanced application features which include but not limited to:
+
+- Video transcoding and compression
+- Video and Image embedding
+- Advanced Live streams sharing
+- Media albums
+- Media expiry
+- Auto deletion when expiry date reaches
+- User authentication and authorization
+- Email activation
+- Static Urls
+- Google ReCaptcha
+- Webtorrent powered video-streaming
+
+## Installation
+
+### Server Requirements
 - [**PHP**](https://php.net) 5.6.4+ (**7+** preferred)
 - PHP Extensions: openssl, mcrypt, mbstring, phpredis and php-zip
 - Database server: [MySQL](https://www.mysql.com) or [**MariaDB**](https://mariadb.org)
@@ -12,7 +35,7 @@ Modalbum includes everything you need to lunch a Live Streaming, Video Streaming
 - [mediainfo](https://mediaarea.net/en/MediaInfo)
 - [transmission](https://transmissionbt.com/)
 
-### Installation
+### Instructions
 * Install some packages `sudo apt-get install ffmpeg mediainfo transmission-cli`
 * clone the repository: `git clone https://github.com/davymaish/modalbum.git`
 * create a database

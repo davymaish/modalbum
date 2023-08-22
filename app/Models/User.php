@@ -44,4 +44,24 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserGroup::class, 'group_id', 'id');
     }
+
+    public function albums()
+    {
+        return $this->hasMany(Album::class, 'created_by');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class, 'created_by');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(Photo::class, 'created_by');
+    }
+
+    public function livetvs()
+    {
+        return $this->hasMany(LiveTv::class, 'created_by');
+    }
 }

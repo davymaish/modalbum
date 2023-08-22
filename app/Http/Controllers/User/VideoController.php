@@ -5,9 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use App\Models\VideoConfig;
+use App\Models\Album;
 use App\Services\ChunkUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class VideoController extends Controller
 {
@@ -47,9 +49,20 @@ class VideoController extends Controller
 
     public function index()
     {
+        meta()->setMeta('My Videos');
+
+        $data['videos'] = Video::where('published', 1)->where('created_by', Auth::id())->whereNull('album_id')->latest()->paginate(48);
+
+        return view('user.videos.index', $data);
+    }
+
+    public function upload()
+    {
         meta()->setMeta('Upload Video');
 
-        return view('user.video-upload');
+        $albums = Album::all();
+
+        return view('user.videos.upload',compact('albums'));
     }
 
     public function create(Request $request)
@@ -61,6 +74,12 @@ class VideoController extends Controller
 
         $uuid = $request->get('uuid');
         $filename = $request->get('filename');
+        $album_id = null;
+
+        if ($request->get('album')) {
+            $album = auth()->user()->albums()->findOrFail($request->get('album'));
+            $album_id = $album->id;
+        }
 
         $video_path = 'videos/' . $uuid . '/';
 
@@ -90,6 +109,7 @@ class VideoController extends Controller
             $video_db = Video::create([
                 'title'       => $request->get('title'),
                 'description' => $request->get('description'),
+                'album_id'    => $album_id,
                 'published'   => false,
                 'created_by'  => auth()->id(),
             ]);
@@ -116,7 +136,7 @@ class VideoController extends Controller
             $this->storage->move($video_path . $filename,
                 $video_path . $file_hash . '.' . $media_info->getGeneral()->get('file_extension'));
 
-            flash('Video uploaded successfully', 'success');
+            flash('Video uploaded successfully. Wait some few minutes for the video to be processed!', 'success');
 
             return redirect('my/videos');
         }
@@ -126,7 +146,7 @@ class VideoController extends Controller
         return redirect()->back();
     }
 
-    public function upload()
+    public function ajaxUpload()
     {
         $result = $this->uploader->handleUpload(storage_path("app/videos"));
         $result["uploadName"] = $this->uploader->getUploadName();
@@ -134,14 +154,14 @@ class VideoController extends Controller
         return response()->json($result);
     }
 
-    public function videoDone()
+    public function ajaxDone()
     {
         $result = $this->uploader->combineChunks(storage_path("app/videos"));
 
         return response()->json($result);
     }
 
-    public function videoDelete($id)
+    public function ajaxDelete($id)
     {
         $result = $this->uploader->handleDelete(storage_path("app/videos"));
 

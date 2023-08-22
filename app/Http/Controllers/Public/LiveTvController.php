@@ -12,8 +12,9 @@ class LiveTvController extends Controller
     public function tv($id)
     {
         $tvinfo = LiveTv::findOrFail($id);
-        $views['views'] = $tvinfo->views + 1;
-        $tvinfo->update($views);
-        return view('tvpage',compact('tvinfo'));
+        $tvinfo->increment('views');
+        meta()->setMeta($tvinfo->title);
+
+        return view('public.livetv.tvpage',compact('tvinfo'));
     }
 }

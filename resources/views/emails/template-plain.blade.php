@@ -10,7 +10,7 @@ Good luck! Hope it works.
 
 @section('signature')
 Best Regards,
-{{ env('SITE_NAME') }} Team.
+{{ config('app.name') }} Team.
 @show
 
 @section('footer')

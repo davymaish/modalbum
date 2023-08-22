@@ -18,10 +18,10 @@ return new class extends Migration
             $table->bigInteger('album_id')->unsigned()->nullable()->default(null);
             $table->index('album_id');
             $table->string('title', 255)->nullable();
+            $table->text('description')->nullable();
             $table->string('featured_image', 255)->nullable();
             $table->text('embed')->nullable();
             $table->enum('live', ['yes', 'no'])->default('no');
-            $table->text('description')->nullable();
             $table->enum('featured', ['yes', 'no'])->default('no');
             $table->integer('views')->default(0);
             $table->integer('status')->default(1);

@@ -10,8 +10,8 @@ class Album extends Model
 
     protected $fillable = [
         'hash',
-        'album_title',
-        'album_description',
+        'title',
+        'description',
         'adult',
         'private',
         'expire',
@@ -26,5 +26,10 @@ class Album extends Model
     public function videos()
     {
         return $this->hasMany(Video::class, 'album_id', 'id');
+    }
+
+    public function livetvs()
+    {
+        return $this->hasMany(LiveTv::class, 'album_id', 'id');
     }
 }

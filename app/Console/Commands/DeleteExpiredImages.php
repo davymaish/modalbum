@@ -9,7 +9,6 @@ use Illuminate\Console\Command;
 
 class DeleteExpiredImages extends Command
 {
-
     protected $signature = 'imagez:delete:expired';
 
     protected $description = 'Delete expired images';

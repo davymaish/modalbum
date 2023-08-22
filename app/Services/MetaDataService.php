@@ -106,6 +106,6 @@ class MetaDataService
      */
     private function getDefaultTitle()
     {
-        return env('SITE_NAME') ?: 'Site Name';
+        return config('app.name') ?: 'Site Name';
     }
 }

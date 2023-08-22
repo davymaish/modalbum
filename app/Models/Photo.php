@@ -12,8 +12,8 @@ class Photo extends Model
         'album_id',
         'hash',
         'file_hash',
-        'image_title',
-        'image_description',
+        'title',
+        'description',
         'image_extension',
         'image_width',
         'image_height',
@@ -22,4 +22,14 @@ class Photo extends Model
         'expire',
         'created_by'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class, 'album_id', 'id');
+    }
 }

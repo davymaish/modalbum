@@ -19,6 +19,11 @@ class Video extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class, 'album_id', 'id');
     }
 }

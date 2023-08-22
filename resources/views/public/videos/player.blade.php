@@ -4,9 +4,9 @@
     <h1 class="page-title">{{ meta()->pageTitle() }}</h1>
     <div class="block">
         <div id="hero">
-            <div id="output">
+            <div>
                 <div id="progressBar"></div>
-                <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" data-setup="{}" poster="{{ url('v/p/'.$video->id.'-'.mt_rand(1,5).'.png') }}">
+                <video id="output" class="video-js vjs-default-skin" controls preload="auto" data-setup="{}" poster="{{ url('v/p/'.$video->id.'-'.mt_rand(1,5).'.png') }}" style="height: 350px;">
                     {{--<source src="{{ url($video->file_path.$video->file_name) }}" type="video/mp4"/>--}}
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -14,7 +14,6 @@
                     </p>
                 </video>
             </div>
-
             <div id="status">
                 <div>
                     <span class="show-leech">Playing </span>
@@ -39,66 +38,13 @@
 @endsection
 
 @section('header_css')
-    <link href="https://vjs.zencdn.net/5.19/video-js.css" rel="stylesheet">
-    <style>
-        .video-js {
-            width: 100%;
-            min-width: 100%;
-            height: 640px;
-        }
-
-        #output video {
-            width: 100%;
-        }
-
-        #progressBar {
-            height: 5px;
-            width: 0%;
-            background-color: #35b44f;
-            transition: width .4s ease-in-out;
-        }
-
-        body.is-seed .show-seed {
-            display: inline;
-        }
-
-        body.is-seed .show-leech {
-            display: none;
-        }
-
-        .show-seed {
-            display: none;
-        }
-
-        #status code {
-            font-size: 90%;
-            font-weight: 700;
-            margin-left: 3px;
-            margin-right: 3px;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
-        }
-
-        .is-seed #hero {
-            background-color: #154820;
-            transition: .5s .5s background-color ease-in-out;
-        }
-
-        #hero {
-            background-color: #2a3749;
-        }
-
-        #status {
-            color: #fff;
-            font-size: 17px;
-            padding: 5px;
-        }
-    </style>
+    <link href="{{ url('vendor/video.css') }}" rel="stylesheet">
 @endsection
 
 @section('footer_js')
-    <script src="https://vjs.zencdn.net/5.19/video.js"></script>
-    @vite('resources/js/webtorrent.js')
-    <script>
+    <script src="{{ url('vendor/video.js') }}"></script>
+    <script type="module" src="{{ mix('js/webtorrent.js') }}"></script>
+    <script type="module">
         var torrentId = '{{ url('v/t/'.$video->id.'.torrent') }}';
         WebTorrentInit(torrentId);
     </script>

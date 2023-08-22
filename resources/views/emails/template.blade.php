@@ -27,7 +27,7 @@
 @show
 @section('signature')
 <p>Best Regards,</p>
-<p>{{ env('SITE_NAME') }} Team.</p>
+<p>{{ config('app.name') }} Team.</p>
 @show
 </td>
 </tr>
@@ -49,7 +49,7 @@
 <tr>
 <td>
 @section('disclaimer')
-This is a service email for <span style="color: #2F90E2; text-decoration: none;">{{ $to }}</span> containing necessary account information.<br>Please do not reply to this message.<br><span class="apple-link"><a href="{{ url('/') }}">{{ env('SITE_NAME') }}</a></span>
+This is a service email for <span style="color: #2F90E2; text-decoration: none;">{{ $to }}</span> containing necessary account information.<br>Please do not reply to this message.<br><span class="apple-link"><a href="{{ url('/') }}">{{ config('app.name') }}</a></span>
 @show
 </td>
 </tr>
